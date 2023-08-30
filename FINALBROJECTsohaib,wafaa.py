@@ -5,8 +5,6 @@ class Book:
         self.author = author
         self.level = level
         self.available = True
-
-
 class Member:
     def __init__(self, member_id, name, email, level):
         self.member_id = member_id
@@ -14,25 +12,23 @@ class Member:
         self.email = email
         self.level = level
         self.borrowed_books = []
-
-
 class Library:
     def __init__(self):
         self.books = []
         self.members = []
-
-    def add_book(self, book):
-        self.books.append(book)
-
+# One Choice : 
     def add_member(self, member):
         self.members.append(member)
-
+# Five Choice :
+    def add_book(self, book):
+        self.books.append(book)
+# Three Choice :
     def display_members(self):
         print("ID\t\t | Name\t\t\t | Email\t\t | Level\t\t\t ")
         print("=" * 80)
         for member in self.members:
             print(f"{member.member_id}\t\t | {member.name}\t\t | {member.email}\t\t | {member.level}")
-
+# Six Choice :
     def display_books(self):
         print("ID\t | Title\t | Author\t | Level\t | Availability")
         print("=" * 80)
@@ -51,10 +47,7 @@ class Library:
             if book.book_id == book_id:
                 return book
         return None
-
-
 library = Library()
-
 welcome = "Welcome to the Library System"
 print(welcome.center(100, "-"))
 choices = ''' 
@@ -68,10 +61,10 @@ choices = '''
 8.Return Book 
 9.Exit 
 '''
-
 while True:
     print(choices)
     choice = int(input("Enter Your Choice : "))
+    # Option 1: Add Member
     if choice == 1:
         name1 = input("*Enter member name : ")
         email1 = input("*Enter member email : ")
@@ -85,7 +78,7 @@ while True:
         member_id = len(library.members) + 1
         new_member = Member(member_id, name1, email1, level1)
         library.add_member(new_member)
-
+    # Option 2: Edit Member
     elif choice == 2:
         member_id = int(input("*Enter Member ID : "))
         member = library.find_memberId(member_id)
@@ -102,10 +95,10 @@ while True:
             member.level = level2
         else:
             print("MemberID Not Found!!")
-
+    # Option 3: Display Members
     elif choice == 3:
         library.display_members()
-
+    # Option 4: Delete Member
     elif choice == 4:
         member_id_to_delete = int(input("*Enter Member ID to delete : "))
         member_to_delete = None
@@ -117,10 +110,14 @@ while True:
 
         if member_to_delete:
             library.members.remove(member_to_delete)
+            new_member_id = 1
+            for remaining_member in library.members:
+                remaining_member.member_id = new_member_id
+                new_member_id += 1
             print("# Member deleted successfully.")
         else:
             print("MemberID Not Found!!")
-
+    # Option 5: Add Book
     elif choice == 5:
         title = input("*Enter Book Title : ")
         author = input("*Enter Book Author : ")
@@ -132,10 +129,10 @@ while True:
         book_id = len(library.books) + 1
         new_book = Book(book_id, title, author, level1)
         library.add_book(new_book)
-
+    # Option 6: Display Books
     elif choice == 6:
         library.display_books()
-
+    # Option 7: Borrow Book
     elif choice == 7:
         memberr_id = int(input("*Enter Member ID : "))
         book_id = int(input("*Enter Book ID : "))
@@ -152,7 +149,7 @@ while True:
                 print("#Member level is not suitable for borrowing this  book  !!")
         else:
             print("Member or Book not Found !!")
-
+    # Option 8: Return Book
     elif choice == 8:
         memberr_id = int(input("*Enter Member ID : "))
         book_id = int(input("*Enter Book ID : "))
@@ -168,7 +165,7 @@ while True:
                     print("Sorry !! , Not found :(")
         else:
             print("Member or Book not Found !!")
-
+    # Option 9: Exit
     elif choice == 9:
         welcome = " Your Welcome Everyone :) "
         print(welcome.center(100,"*"))
